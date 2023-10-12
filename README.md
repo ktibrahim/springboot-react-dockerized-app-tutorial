@@ -5,17 +5,22 @@
 ```
 git clone 
 ```
+## Frontend
+Frontend is built in React and integrated in the spring boot project in frontend folder. The spring boot application is configured to build and package React with Spring Boot through maven. You do not need to do anything extra to build frontend separately, maven will take care of it via frontend-maven-plugin.
+* After building the application (instructions provided in #Testing and building the project step), you can access frontend from browser "localhost:5000".
+* Both frontend and backed are using same port i.e 5000, the difference is in path, for backend "/api" is appended in the path where as frontend does not has it.
+* Everything will work just fine if you start at the root, since React will handle routing. To make sure you are able to reload the React application in the browser, a filter in ReactRequestForwardFilter class intercepts the requests and conditionally forwards to the React app.
 
 ## Backend
-The backend is implemented as a spring boot application in Java 17. It uses MongoDB as a local database with no username and password and is run on port 27017. The application exposes 3 REST APIs for storing and retrieving information regarding ontologies.
+The backend is implemented as a spring boot application in Java 17. It uses MongoDB as a local database with no enabled access control and is run on port 27017. The application exposes 3 REST APIs for storing and retrieving information regarding ontologies.
 The application is containerised through docker, instructions to build and run the docker image for the project is provided below in the next steps.
-Once the docker container for the backend application is running, the API can be accessed at 5000 port. E.g **http://localhost:5000/api/ontology/efo**
+Once the docker container for the backend application is running, the API can be accessed at 5000 port. E.g **http://localhost:5000/api/ontologies/efo**
 
 
 ### Backend APIs
 * Get Ontologies list: this is a GET method with a path **/api/ontologies**
-* Get Ontology by Id: this is a GET method with a path **/api/ontology/{ontologyId}** where "{ontologyId}" is the ontology Id
-* Post Ontology: This is POST method with a path **/api/ontology/**. It accepts the data in json format. OntologyId, title and description fields are mandatory. Sample json provided for your reference.
+* Get Ontology by Id: this is a GET method with a path **/api/ontologies/{ontologyId}** where "{ontologyId}" is the ontology Id
+* Post Ontology: This is POST method with a path **/api/ontologies**. It accepts the data in json format. OntologyId, title and description fields are mandatory. Sample json provided for your reference.
   * ontologyId - String
   * title - String
   * description - String
@@ -35,7 +40,7 @@ Once the docker container for the backend application is running, the API can be
 **application.properties**
 ```
 server.port=5000
-spring.data.mongodb.uri=mongodb://localhost:27017/mongo-docker
+spring.data.mongodb.uri=mongodb://localhost:27070/mongo-docker
 ```
 ## Dockerfile
 Here, we are using open JDK 17, we set up the application build in Dockerfile.
@@ -70,10 +75,10 @@ ENTRYPOINT ["java", "-Dspring.data.mongodb.uri=mongodb://mongodocker/mongodb", "
 docker pull mongo
 ```
 
-Run the mongodb docker image by executing below command. It runs the db with the name mongodb & exposes port 27017.
+Run the mongodb docker image by executing below command. It runs the db with the name mongodb & listens on port 27017.
 
 ```
-docker run --name mongodb -p 27017:27017 -d mongo
+docker run --name mongodb -p 27070:27017 -d mongo
 ```
 
 You can check if the mongodb container is running by executing below command.
@@ -82,7 +87,7 @@ You can check if the mongodb container is running by executing below command.
 docker ps
 ```
 
-## Build and install the spring boot application
+## Build and install the application
 Now in the project's root directory execute below command to build the project's JAR, this will also run tests.
 
 ```
@@ -99,7 +104,7 @@ java -jar target/talal-ibrahim-ontology-tools-test.jar
 ```
 
 You can test the ontology API from the browser via following URL
-_http://localhost:5000/api/ontology/efo_
+_http://localhost:5000/api/ontologies/efo_
 
 # Dockerize the project
 
