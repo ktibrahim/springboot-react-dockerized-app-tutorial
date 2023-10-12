@@ -33,7 +33,7 @@ public class OntologyController {
         return ResponseEntity.ok(getOntologyDtoList(ontology));
     }
 
-    @GetMapping("/ontology/{ontologyId}")
+    @GetMapping("/ontologies/{ontologyId}")
     public ResponseEntity<OntologyDto> getOntologyById(@PathVariable String ontologyId) {
         Ontology ontology = null;
         OntologyDto ontologyDto = null;
@@ -50,7 +50,7 @@ public class OntologyController {
         return ResponseEntity.ok().body(ontologyDto);
     }
 
-    @PostMapping(path = "/ontology")
+    @PostMapping(path = "/ontologies")
     public ResponseEntity<OntologyDto> saveOntology(@Valid @RequestBody OntologyDto ontologyDto) {
         Ontology ontology = ontologyService.saveOntology(ontologyDto);
         return ResponseEntity.ok(getOntologyDto(ontology));
