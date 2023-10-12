@@ -6,7 +6,7 @@
 git clone 
 ```
 ## Frontend
-Frontend is built in React and integrated in the spring boot project in frontend folder. The spring boot application is configured to build and package React with Spring Boot through maven. You do not need to do anything extra to build frontend separately, maven will take care of it via frontend-maven-plugin.
+Frontend is built in React and integrated in the spring boot application. It is available in the frontend folder. The spring boot application is configured to build and package React with Spring Boot through maven. You do not need to do anything extra to build frontend separately, maven will take care of it via frontend-maven-plugin.
 * After building the application (instructions provided in #Testing and building the project step), you can access frontend from browser "localhost:5000".
 * Both frontend and backed are using same port i.e 5000, the difference is in path, for backend "/api" is appended in the path where as frontend does not has it.
 * Everything will work just fine if you start at the root, since React will handle routing. To make sure you are able to reload the React application in the browser, a filter in ReactRequestForwardFilter class intercepts the requests and conditionally forwards to the React app.
