@@ -7,16 +7,14 @@ git clone https://github.com/ktibrahim/ontology-tools-developer-test.git
 ```
 ## Frontend
 Frontend is built in React and integrated in the spring boot application. It is available in the frontend folder. The spring boot application is configured to build and package React with Spring Boot through maven. You do not need to do anything extra to build frontend separately, maven will take care of it via frontend-maven-plugin.
-* After building the application, instructions provided in [section] (#testing-and-building-the-project section), you can access frontend from browser at "localhost:5000".
+* After building the application, instructions provided in [section](#testing-and-building-the-project), you can access frontend from browser at "localhost:5000".
 * Both frontend and backed are using the same port i.e. 5000, the difference is in path, for backend "/api" is appended in the path whereas frontend does not have it.
 * Everything will work just fine if you start at the root, since React will handle routing. To make sure you are able to reload the React application in the browser, a filter in ReactRequestForwardFilter class intercepts the requests and conditionally forwards to the React app.
 
 ## Backend
-* The backend is implemented as a spring boot application in Java 17. It uses MongoDB as a local database with no enabled access control, it listens on port 27017 and is exposed at port 27071. Details available in [section] (#pull-&-run-mongodb-docker-container-in-the-local-machine)
+* The backend is implemented as a spring boot application in Java 17. It uses MongoDB as a local database with no enabled access control, it listens on port 27017 and is exposed at port 27071. Details available in [section](#pull-&-run-mongodb-docker-container-in-the-local-machine)
 * The application exposes 3 REST APIs for storing and retrieving information regarding ontologies.
-* The application is containerised through docker, instructions to build and run the docker image for the project is provided in [section] (#dockerize-the-project section).
-* Once the docker container for the backend application is running, the API can be accessed at 5000 port. E.g **http://localhost:5000/api/ontologies/efo**
-
+* The application is containerised through docker, instructions to build and run the docker image for the project is provided in [section](#dockerize-the-project section).
 
 ### Backend APIs
 * Get Ontologies list: this is a GET method with path **/api/ontologies**
@@ -71,13 +69,12 @@ ENTRYPOINT ["java", "-Dspring.data.mongodb.uri=mongodb://mongodocker/mongodb", "
 * This step is required to build and test the spring boot app locally via maven. 
 * When dockerizing the application we will build mongodb along with the project in a single image.
 * Before building the spring boot application, pull mongodb docker image if not present.
-* For this test I have not used volumes are not used with mongodb, but they can be used to make sure data is not lost during container restarts.
 
 ```
 docker pull mongo
 ```
 
-Run the mongodb docker image by executing below command. It runs the db with the name mongodb & listens on port 27071.
+Run the mongodb docker image by executing below command. It runs the db with the name mongodb & exposes port 27071.
 
 ```
 docker run --name mongodb -p 27071:27017 -d mongo
@@ -90,7 +87,7 @@ docker ps
 ```
 
 ## Build and install the application
-Now in the project's root directory execute below command to build the project's JAR, this will also run tests.
+Now in the project's root directory execute below command to build the project's JAR, this will also run tests. Java 17 is required to build the project.
 
 ```
 mvn clean install
@@ -98,7 +95,7 @@ mvn clean install
 
 * It will take sometime to install dependencies and build the project.
 * The jar will be created in target folder with the name _talal-ibrahim-ontology-tools-test.jar_
-* you can run the application by mvn spring-boot command. The jar is available at target/talal-ibrahim-ontology-tools-test.jar, you can also use it to run the project.
+* You can run the application by mvn spring-boot command.
 
 ```
 mvn spring-boot:run
@@ -115,7 +112,7 @@ _http://localhost:5000_
 ## We will use Docker-compose to build the project's docker image
 
 **Build the Docker Image**
-Use below command for docker to build the project as an image.
+In the project's root directory, execute below command to build the project's docker image.
 
 ```
 docker-compose build
@@ -131,9 +128,8 @@ docker-compose up -d
 ```
 
 There should be 2 steps completed.
-* Spring boot application container should be created as **backend-app**. This was defined as the container name in docker-compose file.
-* Mongodb container is also created through a service defined in docker-compose file.
-* Network between these two containers is created by docker-build_default
+* Spring boot application container should be created **backend-app**. This was defined as the container name in docker-compose file.
+* Mongodb container is also created **mongodocker** through a service defined in docker-compose file.
 
 If you want to see the running containers, execute below command in terminal
 
@@ -151,6 +147,6 @@ http://localhost:5001/api/ontologies
 Frontend
 
 ```
-http://localhost:5001/
+http://localhost:5001
 ```
 
