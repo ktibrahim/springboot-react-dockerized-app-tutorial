@@ -1,9 +1,7 @@
-# Ontology Tools Developer Test - Talal Ibrahim
-
 ## Clone the project
 
 ```
-git clone https://github.com/ktibrahim/ontology-tools-developer-test.git
+git clone https://github.com/ktibrahim/springboot-react-dockerized-app-tutorial.git
 ```
 ## Frontend
 Frontend is built in React and integrated in the spring boot application. It is available in the frontend folder. The spring boot application is configured to build and package React with Spring Boot through maven. You do not need to do anything extra to build frontend separately, maven will take care of it via frontend-maven-plugin.
